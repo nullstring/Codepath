@@ -8,17 +8,58 @@
 
 import UIKit
 import AFNetworking
+import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var moviesTableView: UITableView!
     var movies: [[String: Any]] = []
-
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        let api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(api_key)")
+        let request = URLRequest(url: url!)
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
+            delegate:nil,
+            delegateQueue:OperationQueue.main
+        )
+        let task : URLSessionDataTask = session.dataTask(
+            with: request as URLRequest,
+            completionHandler: { (data, response, error) in
+                if let data = data {
+                    if let responseDictionary = try! JSONSerialization.jsonObject(
+                        with: data, options:[]) as? NSDictionary {
+                        // Recall there are two fields in the response dictionary, 'meta' and 'response'.
+                        // This is how we get the 'response' field
+                        self.movies = responseDictionary["results"] as! [[String: Any]]
+                        self.moviesTableView.reloadData()
+                        
+                        refreshControl.endRefreshing()
+                    } else {
+                        self.networkErrorView.isHidden = false
+                        refreshControl.endRefreshing()
+                    }
+                } else {
+                    self.networkErrorView.isHidden = false
+                    refreshControl.endRefreshing()
+                }
+        });
+        task.resume()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         moviesTableView.dataSource = self
         moviesTableView.delegate = self
         // Do any additional setup after loading the view.
+        
+        // Initialize a UIRefreshControl
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        // add refresh control to table view
+        moviesTableView.insertSubview(refreshControl, at: 0)
         
         let api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(api_key)")
@@ -29,22 +70,37 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             delegateQueue:OperationQueue.main
         )
         
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         let task : URLSessionDataTask = session.dataTask(
             with: request as URLRequest,
             completionHandler: { (data, response, error) in
                 if let data = data {
                     if let responseDictionary = try! JSONSerialization.jsonObject(
                         with: data, options:[]) as? NSDictionary {
-                        print("responseDictionary: \(responseDictionary)")
+                        // print("responseDictionary: \(responseDictionary)")
                         
                         // Recall there are two fields in the response dictionary, 'meta' and 'response'.
                         // This is how we get the 'response' field
                         self.movies = responseDictionary["results"] as! [[String: Any]]
                         self.moviesTableView.reloadData()
+                        
+                        // Hide HUD once the network request comes back (must be done on main UI thread)
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                    } else {
+                        self.networkErrorView.isHidden = false
+                        // Hide HUD once the network request comes back (must be done on main UI thread)
+                        MBProgressHUD.hide(for: self.view, animated: true)
                     }
+                } else {
+                    self.networkErrorView.isHidden = false
+                    // Hide HUD once the network request comes back (must be done on main UI thread)
+                    MBProgressHUD.hide(for: self.view, animated: true)
                 }
         });
         task.resume()
+
     }
 
     override func didReceiveMemoryWarning() {

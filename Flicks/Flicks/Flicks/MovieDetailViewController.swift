@@ -13,6 +13,8 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var posterView: UIImageView!
+    @IBOutlet weak var detailScrollView: UIScrollView!
+    @IBOutlet weak var movieInfoView: UIView!
     
     var movie: [String: Any]!
     
@@ -30,6 +32,10 @@ class MovieDetailViewController: UIViewController {
         titleLabel.text = title
         overviewLabel.text = overview
 
+        overviewLabel.sizeToFit()
+        
+        detailScrollView.contentSize = CGSize(width: detailScrollView.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height)
+        
         // Do any additional setup after loading the view.
     }
 
