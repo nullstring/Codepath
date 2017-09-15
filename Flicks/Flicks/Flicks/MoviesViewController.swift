@@ -10,13 +10,15 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var moviesTableView: UITableView!
+    @IBOutlet weak var movieSearchBar: UISearchBar!
     
     var endpoint: String!
     var movies: [[String: Any]] = []
+    var filteredMovies: [[String: Any]] = []
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         let api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
@@ -36,6 +38,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         // Recall there are two fields in the response dictionary, 'meta' and 'response'.
                         // This is how we get the 'response' field
                         self.movies = responseDictionary["results"] as! [[String: Any]]
+                        self.filteredMovies = self.movies
                         self.moviesTableView.reloadData()
                         
                         refreshControl.endRefreshing()
@@ -55,6 +58,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         moviesTableView.dataSource = self
         moviesTableView.delegate = self
+        movieSearchBar.delegate = self
         // Do any additional setup after loading the view.
         
         // Initialize a UIRefreshControl
@@ -86,6 +90,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         // Recall there are two fields in the response dictionary, 'meta' and 'response'.
                         // This is how we get the 'response' field
                         self.movies = responseDictionary["results"] as! [[String: Any]]
+                        self.filteredMovies = self.movies
                         self.moviesTableView.reloadData()
                         
                         // Hide HUD once the network request comes back (must be done on main UI thread)
@@ -111,14 +116,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return filteredMovies.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = moviesTableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
-        let movie = movies[indexPath.row]
+        let movie = filteredMovies[indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         
@@ -134,6 +139,22 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         print("\(indexPath.row)")
         return cell
+    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        // When user has entered text into the search box
+        // Use the filter method to iterate over all items in the data array
+        // For each item, return true if the item should be included and false if the
+        // item should NOT be included
+        filteredMovies = searchText.isEmpty ? movies : movies.filter { (movie: [String: Any]) -> Bool in
+            // If dataItem matches the searchText, return true to include it
+            let title = movie["title"] as! String
+            return title.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        
+        moviesTableView.reloadData()
     }
     
     // MARK: - Navigation
