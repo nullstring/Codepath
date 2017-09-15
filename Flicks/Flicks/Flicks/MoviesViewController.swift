@@ -14,11 +14,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var moviesTableView: UITableView!
+    
+    var endpoint: String!
     var movies: [[String: Any]] = []
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         let api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(api_key)")
+        let url = URL(string:"https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(api_key)")
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
@@ -62,7 +64,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         moviesTableView.insertSubview(refreshControl, at: 0)
         
         let api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(api_key)")
+        let url = URL(string:"https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(api_key)")
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
