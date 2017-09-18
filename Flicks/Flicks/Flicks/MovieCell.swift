@@ -23,6 +23,21 @@ class MovieCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        if selected {
+            self.backgroundColor = UIColor.blue
+        } else {
+            self.backgroundColor = UIColor.clear
+        }
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        if highlighted {
+            self.backgroundColor = UIColor.black
+        } else {
+            self.backgroundColor = UIColor.clear
+        }
     }
 
 }

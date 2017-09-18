@@ -53,12 +53,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         });
         task.resume()
     }
+
+    @IBAction func onTap(_ sender: Any) {
+        movieSearchBar.endEditing(true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         moviesTableView.dataSource = self
         moviesTableView.delegate = self
         movieSearchBar.delegate = self
+        
         // Do any additional setup after loading the view.
         
         // Initialize a UIRefreshControl
@@ -110,6 +115,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     }
 
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        movieSearchBar.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        movieSearchBar.endEditing(true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -118,7 +131,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredMovies.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = moviesTableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
@@ -129,13 +141,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let baseUrl = "https://image.tmdb.org/t/p/w500"
         if let posterPath = movie["poster_path"] as? String {
-            let posterUrl = URL(string: baseUrl+posterPath)
-            cell.posterView.setImageWith(posterUrl!)
+            Helper.setImageWithURLRequest(imageView: cell.posterView, imageUrl: baseUrl+posterPath)
         }
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        
         
         print("\(indexPath.row)")
         return cell

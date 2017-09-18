@@ -21,19 +21,24 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set title.
         let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
-        let baseUrl = "https://image.tmdb.org/t/p/w500"
-        if let posterPath = movie["poster_path"] as? String {
-            let posterUrl = URL(string: baseUrl+posterPath)
-            posterView.setImageWith(posterUrl!)
-        }
-        
         titleLabel.text = title
+        
+        // Set overview.
+        let overview = movie["overview"] as! String
         overviewLabel.text = overview
-
         overviewLabel.sizeToFit()
         
+        // For future reference, all possible sizes are here.
+        // https://www.themoviedb.org/talk/53c11d4ec3a3684cf4006400?language=en
+        let baseSmallImageUrl = "https://image.tmdb.org/t/p/w500"
+        let baseLargeImageUrl = "https://image.tmdb.org/t/p/w1280"
+        if let posterPath = movie["poster_path"] as? String {
+            Helper.setImageWithURLRequest(imageView: posterView, smallImageUrl: baseSmallImageUrl+posterPath, largeImageUrl: baseLargeImageUrl+posterPath)
+        }
+        
+        // Set content size.
         detailScrollView.contentSize = CGSize(width: detailScrollView.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height)
         
         // Do any additional setup after loading the view.
