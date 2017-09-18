@@ -1,45 +1,35 @@
-# Pre-work - *Tipsy*
+# Pre-work - *Flicks*
 
-**Tipsy** is a tip calculator application for iOS.
+**FLicks** is minimal TMDb client application for iOS.
 
 Submitted by: **Harsh Mehta**
 
-Time spent: **8** hours spent in total
+Time spent: **7** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is complete:
 
-* [ ] User can enter a bill amount, choose a tip percentage, and see the tip and total values.
-* [ ] Settings page to change the default tip percentage.
+* [ ] User can view a list of movies currently playing in theaters from The Movie Database.
+* [ ] User can view movie details by tapping on a cell.
+* [ ] User sees loading state while waiting for movies API.
+* [ ] User sees an error message when there's a networking error.
+* [ ] User can pull to refresh the movie list.
 
 The following **optional** features are implemented:
-* [ ] Remembering the bill amount across app restarts (if <10mins)
-* [ ] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
-
-The following **additional** features are implemented:
-
-- [ ] User can select how many ways the amoung is going to be split, if at all.
+* [ ] Add a tab bar for Now Playing or Top Rated movies
+* [ ] Add a search bar.
+* [ ] All images fade in as they are loading.
+* [ ] For the large poster, load the low-res image first and switch to * [ ] high-res when complete.
+* [ ] Customize the highlight and selection effect of the cell.
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://imgur.com/a/6GGto' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://imgur.com/a/kXfVc' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
-
-## Project Analysis
-
-As part of your pre-work submission, please reflect on the app and answer the following questions below:
-
-**Question 1**: "What are your reactions to the iOS app development platform so far? How would you describe outlets and actions to another developer? Bonus: any idea how they are being implemented under the hood? (It might give you some ideas if you right-click on the Storyboard and click Open As->Source Code")
-
-**Answer:** [Enter your answer here in a paragraph or two].
-
-Question 2: "Swift uses [Automatic Reference Counting](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID49) (ARC), which is not a garbage collector, to manage memory. Can you explain how you can get a strong reference cycle for closures? (There's a section explaining this concept in the link, how would you summarize as simply as possible?)"
-
-**Answer:** [Enter your answer here in a paragraph or two].
 
 
 ## License
