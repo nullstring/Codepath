@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08177F981F74ABBA00EB963B /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08177F971F74ABBA00EB963B /* FiltersViewController.swift */; };
+		08177F9A1F74ABDA00EB963B /* FiltersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08177F991F74ABDA00EB963B /* FiltersCell.swift */; };
+		08177F9C1F74AD4F00EB963B /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08177F9B1F74AD4F00EB963B /* Filters.swift */; };
+		08177FA01F74C34100EB963B /* FiltersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08177F9F1F74C34100EB963B /* FiltersHeaderView.swift */; };
 		086DE44A1F72471900FE880D /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086DE4491F72471900FE880D /* BusinessTableViewCell.swift */; };
 		222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */; };
 		222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A5E19CCF9F900D2DB53 /* Main.storyboard */; };
@@ -31,6 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08177F971F74ABBA00EB963B /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
+		08177F991F74ABDA00EB963B /* FiltersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersCell.swift; sourceTree = "<group>"; };
+		08177F9B1F74AD4F00EB963B /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		08177F9F1F74C34100EB963B /* FiltersHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersHeaderView.swift; sourceTree = "<group>"; };
 		086DE4491F72471900FE880D /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		0A1000F3975EB43318C1D4FA /* Pods_YelpTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YelpTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A5519CCF9F900D2DB53 /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				22AAAA981AEA0A9700A544AF /* Business.swift */,
+				08177F9B1F74AD4F00EB963B /* Filters.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -154,6 +163,9 @@
 			children = (
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
 				086DE4491F72471900FE880D /* BusinessTableViewCell.swift */,
+				08177F971F74ABBA00EB963B /* FiltersViewController.swift */,
+				08177F991F74ABDA00EB963B /* FiltersCell.swift */,
+				08177F9F1F74C34100EB963B /* FiltersHeaderView.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -394,10 +406,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08177FA01F74C34100EB963B /* FiltersHeaderView.swift in Sources */,
 				086DE44A1F72471900FE880D /* BusinessTableViewCell.swift in Sources */,
+				08177F9C1F74AD4F00EB963B /* Filters.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,
 				222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */,
+				08177F9A1F74ABDA00EB963B /* FiltersCell.swift in Sources */,
+				08177F981F74ABBA00EB963B /* FiltersViewController.swift in Sources */,
 				222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
