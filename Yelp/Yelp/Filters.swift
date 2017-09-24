@@ -8,30 +8,112 @@
 
 import Foundation
 
-class Filter : NSObject {
-    let displayName: String?
-    let isOn: Bool?
+class DealFilter: NSObject {
+    var name = "Offering a Deal"
+    var selected = false
+}
+
+enum DistanceFilter: Int {
+    case M0_3 = 0, M1, M5, M20
     
-    init(displayName: String?, isOn: Bool?) {
-        self.displayName = displayName
-        self.isOn = isOn
+    func getDescription() -> String {
+        switch self {
+        case .M0_3: return "0.3 miles"
+        case .M1: return "1 mile"
+        case .M5: return "5 miles"
+        case .M20: return "20 miles"
+        }
+    }
+    
+    static func getDistanceFilterForIndex(index: Int) -> DistanceFilter {
+        switch index {
+        case 0:
+            return DistanceFilter.M0_3
+        case 1:
+            return DistanceFilter.M1
+        case 2:
+            return DistanceFilter.M5
+        case 3:
+            return DistanceFilter.M20
+        default:
+            return DistanceFilter.M0_3
+        }
+    }
+    
+    static func getOrderedDescriptions() -> [String] {
+        return ["0.3 miles", "1 mile", "5 miles", "20 miles"]
     }
 }
 
-class SearchFilters: NSObject {
+enum SortByFilter: Int {
+    case BestMatch = 0, Distance, HighestRated
     
-    var sort: YelpSortMode?
-    var categories: [String]?
-    var deals: Bool?
-    var radius: Int?
-    
-    static let numSections = 4
-    
-    class func categoryNames() {
-        
+    func getDescription() -> String {
+        switch self {
+        case .BestMatch: return "Best Match"
+        case .Distance: return "Distance"
+        case .HighestRated: return "Highest Rated"
+        }
     }
     
-    static let categoriesTypes = [["name" : "Afghan", "code": "afghani"],
+    static func getOrderedDescriptions() -> [String] {
+        return ["Best Match", "Distance", "Highest Rated"]
+    }
+    
+    static func getSortByFilterForIndex(index: Int) -> SortByFilter {
+        switch index {
+        case 0:
+            return SortByFilter.BestMatch
+        case 1:
+            return SortByFilter.Distance
+        case 2:
+            return SortByFilter.HighestRated
+        default:
+            return SortByFilter.BestMatch
+        }
+    }
+}
+
+class CategoryFilter: NSObject {
+    
+    var categoryNameArray: [String] = []
+    var categoryCodeArray: [String] = []
+    
+    var selectedCategoryIndexes = Set<Int>()
+    var selectedCategoryCodes = Set<String>()
+    
+    
+    func categoryFor(categoryIndex: Int, isSwitchedOn: Bool) {
+        if categoryIndex >= categoryCodeArray.count {
+            return
+        }
+        if isSwitchedOn {
+            selectedCategoryIndexes.insert(categoryIndex)
+            selectedCategoryCodes.insert(categoryCodeArray[categoryIndex])
+        } else {
+            selectedCategoryIndexes.remove(categoryIndex)
+            selectedCategoryCodes.remove(categoryCodeArray[categoryIndex])
+        }
+
+    }
+    
+    func categorySwitchStatusFor(categoryIndex: Int) -> Bool {
+        if categoryIndex >= categoryCodeArray.count {
+            return false
+        }
+        return selectedCategoryIndexes.contains(categoryIndex)
+    }
+    
+    override init() {
+        super.init()
+        _ = categoriesTypes.map {
+            categoryNameArray.append($0["name"]!)
+            categoryCodeArray.append($0["code"]!)
+        }
+    }
+}
+
+let categoriesTypes = [["name" : "Afghan", "code": "afghani"],
                       ["name" : "African", "code": "african"],
                       ["name" : "American, New", "code": "newamerican"],
                       ["name" : "American, Traditional", "code": "tradamerican"],
@@ -200,4 +282,3 @@ class SearchFilters: NSObject {
                       ["name" : "Wok", "code": "wok"],
                       ["name" : "Wraps", "code": "wraps"],
                       ["name" : "Yugoslav", "code": "yugoslav"]]
-}

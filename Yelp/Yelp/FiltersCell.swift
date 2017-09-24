@@ -13,15 +13,19 @@ class FiltersCell: UITableViewCell {
     @IBOutlet weak var filterLabel: UILabel!
     @IBOutlet weak var filterSwitch: UISwitch!
     
+    var switchToggled: ((UITableViewCell, Bool) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
+    @IBAction func onSwitchToggle(_ sender: UISwitch) {
+        switchToggled!(self, sender.isOn)
+    }
 }

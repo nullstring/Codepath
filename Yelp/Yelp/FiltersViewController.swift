@@ -12,12 +12,18 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBOutlet weak var filtersTableView: UITableView!
     
-    let sections = ["Distance", "Sort By", "Category"]
-    let data0 = ["0.3 miles", "1 miles", "5 miles", "20 miles"]
-    let data1 = ["Best Match", "Distance", "Highest Rated"]
-    let data2 = SearchFilters.categoriesTypes.map {
-        $0["name"]!
-    }
+    let sections = ["", "Distance", "Sort By", "Category"]
+    var sectionExpanded = [false, false, false, false]
+    
+    let dealSectionIndex = 0
+    let distanceSectionIndex = 1
+    let sortBySectionIndex = 2
+    let categorySectionIndex = 3
+
+    var dealFilter = DealFilter()
+    var distanceFilter: DistanceFilter = .M0_3
+    var sortByFilter: SortByFilter = .BestMatch
+    var categoryFilter = CategoryFilter()
     
     var sectionData: [[String]] = []
     
@@ -33,7 +39,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         filtersTableView.delegate = self
         filtersTableView.dataSource = self
 
-        sectionData = [data0, data1, data2]
+        sectionData = [[dealFilter.name], [distanceFilter.getDescription()], [sortByFilter.getDescription()], categoryFilter.categoryNameArray]
         // Do any additional setup after loading the view.
     }
 
@@ -45,9 +51,52 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FiltersCell", for: indexPath) as! FiltersCell
         
-        let name = sectionData[indexPath.section][indexPath.row] as String
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        let name = sectionData[section][row] as String
         cell.filterLabel.text = name
         
+        cell.switchToggled = {(cell, isSwitchedOn) -> Void in
+            let indexPath = self.filtersTableView.indexPath(for: cell)!
+            let section = indexPath.section
+            switch section {
+            case self.dealSectionIndex:
+                self.dealFilter.selected = isSwitchedOn
+            case self.categorySectionIndex:
+                self.categoryFilter.categoryFor(categoryIndex: indexPath.row, isSwitchedOn: isSwitchedOn)
+            default: break
+            }
+        }
+        
+        // If one of the exclusive list sections, hide the switch from the filters cell.
+        switch section {
+        case dealSectionIndex:
+            cell.filterSwitch.isHidden = false
+            cell.accessoryType = .none
+            cell.filterSwitch.isOn = dealFilter.selected
+        case distanceSectionIndex:
+            cell.filterSwitch.isHidden = true
+            cell.accessoryType = .checkmark
+            if (!sectionExpanded[section]) || (sectionExpanded[section] && distanceFilter.rawValue == row) {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+        case sortBySectionIndex:
+            cell.filterSwitch.isHidden = true
+            cell.accessoryType = .checkmark
+            if (!sectionExpanded[section]) || (sectionExpanded[section] && sortByFilter.rawValue == row) {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+        case categorySectionIndex:
+            cell.filterSwitch.isHidden = false
+            cell.accessoryType = .none
+            cell.filterSwitch.isOn = categoryFilter.categorySwitchStatusFor(categoryIndex: row)
+        default: break
+        }
         return cell
     }
     
@@ -59,11 +108,31 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         return sectionData.count
     }
     
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "FiltersHeaderView") as! FiltersHeaderView
-        header.filterLabel.text = sections[section]
-        return header
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        switch section {
+        case distanceSectionIndex:
+            if sectionExpanded[section] {
+                distanceFilter = DistanceFilter.getDistanceFilterForIndex(index: indexPath.row)
+                sectionData[distanceSectionIndex] = [distanceFilter.getDescription()]
+            } else {
+                sectionData[distanceSectionIndex] = DistanceFilter.getOrderedDescriptions()
+            }
+        case sortBySectionIndex:
+            if sectionExpanded[section] {
+                sortByFilter = SortByFilter.getSortByFilterForIndex(index: indexPath.row)
+                sectionData[sortBySectionIndex] = [sortByFilter.getDescription()]
+            } else {
+                sectionData[sortBySectionIndex] = SortByFilter.getOrderedDescriptions()
+            }
+        default: break
+        }
+        sectionExpanded[section] = !sectionExpanded[section]
+        tableView.reloadSections(IndexSet([section]), with: .automatic)
     }
     
     
