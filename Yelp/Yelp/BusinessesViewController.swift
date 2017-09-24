@@ -15,7 +15,10 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     var businesses: [Business] = []
     var filteredBusinesses: [Business] = []
 
-    
+    var dealFilter = DealFilter()
+    var distanceFilter: DistanceFilter = .M0_3
+    var sortByFilter: SortByFilter = .BestMatch
+    var categoryFilter = CategoryFilter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,14 +115,42 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         businessesTableView.reloadData()
     }
     
-    /*
+    
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "FiltersViewControllerSegue" {
+            let filterNavigationVC = segue.destination as! UINavigationController
+            let filtersVC = filterNavigationVC.topViewController as! FiltersViewController
+            
+            filtersVC.dealFilter = dealFilter
+            filtersVC.distanceFilter = distanceFilter
+            filtersVC.sortByFilter = sortByFilter
+            filtersVC.categoryFilter = categoryFilter
+            filtersVC.onSaveButtonPressed = { (filtersVC: FiltersViewController) -> Void in
+                self.dealFilter = filtersVC.dealFilter
+                self.distanceFilter = filtersVC.distanceFilter
+                self.sortByFilter = filtersVC.sortByFilter
+                self.categoryFilter = filtersVC.categoryFilter
+                Business.searchWithTerm(term: "", sort: filtersVC.sortByFilter.getYelpSortMode(), categories: Array(filtersVC.categoryFilter.selectedCategoryCodes), deals: filtersVC.dealFilter.selected, radius: filtersVC.distanceFilter.getDistanceInMeters(), completion: { (businesses: [Business]?, error: Error?) -> Void in
+                    self.businesses = businesses!
+                    self.filteredBusinesses = businesses!
+                    
+                    self.businessesTableView.reloadData()
+                    if let businesses = businesses {
+                        for business in businesses {
+                            print(business.name!)
+                            print(business.address!)
+                        }
+                    }
+                    
+                }
+                )
+            }
+        }
+    }
+    
     
 }

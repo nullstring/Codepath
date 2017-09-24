@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class DealFilter: NSObject {
     var name = "Offering a Deal"
     var selected = false
@@ -22,6 +23,15 @@ enum DistanceFilter: Int {
         case .M1: return "1 mile"
         case .M5: return "5 miles"
         case .M20: return "20 miles"
+        }
+    }
+    
+    func getDistanceInMeters() -> Int {
+        switch self {
+        case .M0_3: return 483
+        case .M1: return 1610
+        case .M5: return 8047
+        case .M20: return 32187
         }
     }
     
@@ -53,6 +63,14 @@ enum SortByFilter: Int {
         case .BestMatch: return "Best Match"
         case .Distance: return "Distance"
         case .HighestRated: return "Highest Rated"
+        }
+    }
+    
+    func getYelpSortMode() -> YelpSortMode {
+        switch self {
+        case .BestMatch: return .bestMatched
+        case .Distance: return .distance
+        case .HighestRated: return .highestRated
         }
     }
     

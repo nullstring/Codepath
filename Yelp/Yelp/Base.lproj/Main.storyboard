@@ -117,7 +117,7 @@
                     <navigationItem key="navigationItem" title="Yelp" id="0QE-Ce-vQM">
                         <barButtonItem key="leftBarButtonItem" title="Filter" id="vg4-ht-YGi">
                             <connections>
-                                <segue destination="umZ-8H-GdJ" kind="presentation" id="YH7-Lx-RmZ"/>
+                                <segue destination="umZ-8H-GdJ" kind="presentation" identifier="FiltersViewControllerSegue" id="YH7-Lx-RmZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

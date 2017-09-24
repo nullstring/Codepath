@@ -25,12 +25,15 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     var sortByFilter: SortByFilter = .BestMatch
     var categoryFilter = CategoryFilter()
     
+    var onSaveButtonPressed: ((FiltersViewController) -> Void)?
+    
     var sectionData: [[String]] = []
     
     @IBAction func onCancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func onSave(_ sender: Any) {
+        onSaveButtonPressed!(self)
         dismiss(animated: true, completion: nil)
     }
     override func viewDidLoad() {
