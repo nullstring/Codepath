@@ -1,6 +1,6 @@
 # Pre-work - *Yelp*
 
-**FLicks** is minimal Yelp client application for iOS.
+**Yelp** is minimal Yelp client application for iOS.
 
 Submitted by: **Harsh Mehta**
 
