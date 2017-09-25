@@ -1,34 +1,49 @@
-### Basic Yelp client
+# Pre-work - *Yelp*
 
-This is a headless example of how to implement an OAuth 1.0a Yelp API client. The Yelp API provides an application token that allows applications to make unauthenticated requests to their search API.
+**FLicks** is minimal Yelp client application for iOS.
 
-### Next steps
+Submitted by: **Harsh Mehta**
 
-- Check out `BusinessesViewController.swift` to see how to use the `Business` model.
+Time spent: **9** hours spent in total
 
-### Sample request
+## User Stories
 
-**Basic search with query**
+The following **required** functionality is complete:
 
-```
-Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-    self.businesses = businesses
-    
-    for business in businesses {
-        print(business.name!)
-        print(business.address!)
-    }
-})
-```
+* [x] Table rows should be dynamic height according to the content height.
+* [x] Custom cells should have the proper Auto Layout constraints.
+* [x] Search bar should be in the navigation bar (doesn't have to expand to show location like the real Yelp app does).
+* [x] The filters you should actually have are: category, sort (best match, distance, highest rated), distance, deals (on/off).
+* [x] The filters table should be organized into sections as in the mock.
+* [x] You can use the default UISwitch for on/off states.
+* [x] Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
 
-**Advanced search with categories, sort, and deal filters**
+The following **optional** features are implemented:
+* [x] Infinite scroll for restaurant results
+* [x] Distance filter should expand as in the real Yelp app.
 
-```
-Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+## Video Walkthrough 
 
-    for business in businesses {
-        print(business.name!)
-        print(business.address!)
-    }
-}
-```
+Here's a walkthrough of implemented user stories:
+
+<img src='https://i.imgur.com/ZUSpR.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
+
+## License
+
+    Copyright [yyyy] [name of copyright owner]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
