@@ -11,6 +11,7 @@
 		08177F9A1F74ABDA00EB963B /* FiltersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08177F991F74ABDA00EB963B /* FiltersCell.swift */; };
 		08177F9C1F74AD4F00EB963B /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08177F9B1F74AD4F00EB963B /* Filters.swift */; };
 		086DE44A1F72471900FE880D /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086DE4491F72471900FE880D /* BusinessTableViewCell.swift */; };
+		086FD0791F7887C20003AC21 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086FD0781F7887C20003AC21 /* InfiniteScrollActivityView.swift */; };
 		222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */; };
 		222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A5E19CCF9F900D2DB53 /* Main.storyboard */; };
 		222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6119CCF9F900D2DB53 /* Images.xcassets */; };
@@ -38,6 +39,7 @@
 		08177F991F74ABDA00EB963B /* FiltersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersCell.swift; sourceTree = "<group>"; };
 		08177F9B1F74AD4F00EB963B /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		086DE4491F72471900FE880D /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
+		086FD0781F7887C20003AC21 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		0A1000F3975EB43318C1D4FA /* Pods_YelpTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YelpTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A5519CCF9F900D2DB53 /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A5919CCF9F900D2DB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				086DE4491F72471900FE880D /* BusinessTableViewCell.swift */,
 				08177F971F74ABBA00EB963B /* FiltersViewController.swift */,
 				08177F991F74ABDA00EB963B /* FiltersCell.swift */,
+				086FD0781F7887C20003AC21 /* InfiniteScrollActivityView.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				086FD0791F7887C20003AC21 /* InfiniteScrollActivityView.swift in Sources */,
 				086DE44A1F72471900FE880D /* BusinessTableViewCell.swift in Sources */,
 				08177F9C1F74AD4F00EB963B /* Filters.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,

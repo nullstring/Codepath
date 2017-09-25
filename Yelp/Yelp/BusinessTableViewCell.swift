@@ -16,22 +16,25 @@ class BusinessTableViewCell: UITableViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var categoriesLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    
+
     var business: Business! {
         didSet {
-            posterImageView.setImageWith(business.imageURL!)
+            if let imageURL = business.imageURL {
+                posterImageView.setImageWith(imageURL)
+            }
             ratingsImageView.setImageWith(business.ratingImageURL!)
             businessNameLabel.text = business.name!
-            numReviewsLabel.text =  "\(business.reviewCount!.intValue) Reviews"
+            numReviewsLabel.text = "\(business.reviewCount!.intValue) Reviews"
             distanceLabel.text = business.distance
             categoriesLabel.text = business.categories
             addressLabel.text = business.address
         }
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+
         posterImageView.layer.cornerRadius = 3
         posterImageView.layer.masksToBounds = true
     }
@@ -41,5 +44,4 @@ class BusinessTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

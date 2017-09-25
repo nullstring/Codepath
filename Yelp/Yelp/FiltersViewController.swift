@@ -11,10 +11,10 @@ import UIKit
 class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var filtersTableView: UITableView!
-    
+
     let sections = ["", "Distance", "Sort By", "Category"]
     var sectionExpanded = [false, false, false, false]
-    
+
     let dealSectionIndex = 0
     let distanceSectionIndex = 1
     let sortBySectionIndex = 2
@@ -24,21 +24,23 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     var distanceFilter: DistanceFilter = .M0_3
     var sortByFilter: SortByFilter = .BestMatch
     var categoryFilter = CategoryFilter()
-    
+
     var onSaveButtonPressed: ((FiltersViewController) -> Void)?
-    
+
     var sectionData: [[String]] = []
-    
-    @IBAction func onCancel(_ sender: Any) {
+
+    @IBAction func onCancel(_: Any) {
         dismiss(animated: true, completion: nil)
     }
-    @IBAction func onSave(_ sender: Any) {
+
+    @IBAction func onSave(_: Any) {
         onSaveButtonPressed!(self)
         dismiss(animated: true, completion: nil)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         filtersTableView.delegate = self
         filtersTableView.dataSource = self
 
@@ -50,17 +52,17 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FiltersCell", for: indexPath) as! FiltersCell
-        
+
         let section = indexPath.section
         let row = indexPath.row
-        
+
         let name = sectionData[section][row] as String
         cell.filterLabel.text = name
-        
-        cell.switchToggled = {(cell, isSwitchedOn) -> Void in
+
+        cell.switchToggled = { (cell, isSwitchedOn) -> Void in
             let indexPath = self.filtersTableView.indexPath(for: cell)!
             let section = indexPath.section
             switch section {
@@ -71,7 +73,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             default: break
             }
         }
-        
+
         // If one of the exclusive list sections, hide the switch from the filters cell.
         switch section {
         case dealSectionIndex:
@@ -102,19 +104,19 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sectionData[section].count
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+
+    func numberOfSections(in _: UITableView) -> Int {
         return sectionData.count
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = indexPath.section
         switch section {
@@ -137,21 +139,14 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         sectionExpanded[section] = !sectionExpanded[section]
         tableView.reloadSections(IndexSet([section]), with: .automatic)
     }
-    
-    
-    
 
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
-    
-
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }

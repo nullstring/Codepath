@@ -16,17 +16,17 @@ class Business: NSObject {
     let distance: String?
     let ratingImageURL: URL?
     let reviewCount: NSNumber?
-    
+
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
-        
+
         let imageURLString = dictionary["image_url"] as? String
         if imageURLString != nil {
             imageURL = URL(string: imageURLString!)!
         } else {
             imageURL = nil
         }
-        
+
         let location = dictionary["location"] as? NSDictionary
         var address = ""
         if location != nil {
@@ -34,7 +34,7 @@ class Business: NSObject {
             if addressArray != nil && addressArray!.count > 0 {
                 address = addressArray![0] as! String
             }
-            
+
             let neighborhoods = location!["neighborhoods"] as? NSArray
             if neighborhoods != nil && neighborhoods!.count > 0 {
                 if !address.isEmpty {
@@ -44,7 +44,7 @@ class Business: NSObject {
             }
         }
         self.address = address
-        
+
         let categoriesArray = dictionary["categories"] as? [[String]]
         if categoriesArray != nil {
             var categoryNames = [String]()
@@ -56,7 +56,7 @@ class Business: NSObject {
         } else {
             categories = nil
         }
-        
+
         let distanceMeters = dictionary["distance"] as? NSNumber
         if distanceMeters != nil {
             let milesPerMeter = 0.000621371
@@ -64,17 +64,17 @@ class Business: NSObject {
         } else {
             distance = nil
         }
-        
+
         let ratingImageURLString = dictionary["rating_img_url_large"] as? String
         if ratingImageURLString != nil {
             ratingImageURL = URL(string: ratingImageURLString!)
         } else {
             ratingImageURL = nil
         }
-        
+
         reviewCount = dictionary["review_count"] as? NSNumber
     }
-    
+
     class func businesses(array: [NSDictionary]) -> [Business] {
         var businesses = [Business]()
         for dictionary in array {
@@ -83,12 +83,12 @@ class Business: NSObject {
         }
         return businesses
     }
-    
+
     class func searchWithTerm(term: String, completion: @escaping ([Business]?, Error?) -> Void) {
         _ = YelpClient.sharedInstance.searchWithTerm(term, completion: completion)
     }
-    
-    class func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, radius: Int?, completion: @escaping ([Business]?, Error?) -> Void) -> Void {
-        _ = YelpClient.sharedInstance.searchWithTerm(term, sort: sort, categories: categories, deals: deals, radius: radius, completion: completion)
+
+    class func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, radius: Int?, offset: Int?, completion: @escaping ([Business]?, Error?) -> Void) {
+        _ = YelpClient.sharedInstance.searchWithTerm(term, sort: sort, categories: categories, deals: deals, radius: radius, offset: offset, completion: completion)
     }
 }
