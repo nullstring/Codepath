@@ -83,6 +83,27 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func mentionsTimeline(onSuccess: @escaping (([Tweet])->()), onFailure: @escaping ((Error)->())) {
+        get("1.1/statuses/mentions_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            let tweetDictionaries = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries: tweetDictionaries)
+            onSuccess(tweets)
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            onFailure(error)
+        })
+    }
+    
+    func userTimeline(screenName: String, onSuccess: @escaping (([Tweet])->()), onFailure: @escaping ((Error)->())) {
+        let parameters = NSDictionary.init(dictionary: ["screen_name": screenName])
+        get("1.1/statuses/user_timeline.json", parameters: parameters, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            let tweetDictionaries = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries: tweetDictionaries)
+            onSuccess(tweets)
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            onFailure(error)
+        })
+    }
+    
     func updateStatus(tweetText: String, onSuccess: @escaping ((Tweet)->()), onFailure: @escaping ((Error)->())) {
         let parameters = NSDictionary.init(dictionary: ["status": tweetText])
         post("1.1/statuses/update.json", parameters: parameters, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in

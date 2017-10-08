@@ -24,7 +24,13 @@ class ViewController: UIViewController {
     @IBAction func onTwitterLoginButtonTap(_ sender: Any) {
         TwitterClient.sharedInstance?.login(onSuccess: { 
             print("Login success")
-            self.performSegue(withIdentifier: "MainViewSegue", sender: self)
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let haamburgerViewController = mainStoryboard.instantiateViewController(withIdentifier: "HamburgerViewController") as! HamburgerViewController
+            let menuViewController = mainStoryboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+            menuViewController.hamburgerViewController = haamburgerViewController
+            haamburgerViewController.menuViewController = menuViewController
+            TwitterClient.sharedInstance?.setCurrentUser()
+            self.present(haamburgerViewController, animated: true, completion: nil)
         }, onFailure: { (error: Error) in
             print("Login failure")
         })

@@ -1,15 +1,15 @@
 //
-//  TweetsViewController.swift
+//  MentionsViewController.swift
 //  Tweety
 //
-//  Created by Harsh Mehta on 9/30/17.
+//  Created by Harsh Mehta on 10/5/17.
 //  Copyright © 2017 Harsh Mehta. All rights reserved.
 //
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class MentionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     @IBOutlet weak var tweetsTableView: UITableView!
     var tweets: [Tweet] = []
     
@@ -31,7 +31,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.estimatedRowHeight = 200.0
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         
-        TwitterClient.sharedInstance?.homeTimeline(onSuccess: { (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.mentionsTimeline(onSuccess: { (tweets: [Tweet]) in
             self.tweets = tweets
             self.tweetsTableView.reloadData()
         }, onFailure: { (error: Error) in
@@ -46,7 +46,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // Updates the tableView with the new data
     // Hides the RefreshControl
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        TwitterClient.sharedInstance?.homeTimeline(onSuccess: { (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.mentionsTimeline(onSuccess: { (tweets: [Tweet]) in
             self.tweets = tweets
             self.tweetsTableView.reloadData()
             refreshControl.endRefreshing()
@@ -101,5 +101,5 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-    
+
 }
